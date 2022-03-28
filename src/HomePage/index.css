@@ -1,0 +1,21 @@
+.totalBG {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/match-game-bg.png');
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-size: cover;
+}
+.contentBG {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+.matchImage {
+  width: 85%;
+  border-radius: 5px;
+  margin-top: 25px;
+}
