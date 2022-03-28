@@ -257,6 +257,11 @@ class HomePage extends Component {
         <div className="contentBG">
           <NavBar />
           <img alt="match" src={ImageUrl} className="matchImage" />
+          <div className="CategoriesContainer">
+            <p className="categoryCss">Fruits</p>
+            <p className="categoryCss">Animals</p>
+            <p className="categoryCss">Places</p>
+          </div>
         </div>
       </div>
     )
