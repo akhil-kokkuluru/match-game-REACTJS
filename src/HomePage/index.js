@@ -1,12 +1,13 @@
 import './index.css'
 import {Component} from 'react'
 import NavBar from '../NavBar'
+import Pictures from '../Pictures'
 
-const tabsList = [
-  {tabId: 'FRUIT', displayText: 'Fruits'},
-  {tabId: 'ANIMAL', displayText: 'Animals'},
-  {tabId: 'PLACE', displayText: 'Places'},
-]
+// const tabsList = [
+//   {tabId: 'FRUIT', displayText: 'Fruits'},
+//   {tabId: 'ANIMAL', displayText: 'Animals'},
+//   {tabId: 'PLACE', displayText: 'Places'},
+// ]
 const imagesList = [
   {
     id: 'b11ec8ce-35c9-4d67-a7f7-07516d0d8186',
@@ -248,19 +249,97 @@ const imagesList = [
 ]
 
 class HomePage extends Component {
-  state = {ImageUrl: imagesList[0].imageUrl}
+  state = {
+    ImageUrl: imagesList[0].imageUrl,
+    category: 'FRUIT',
+    activeImageId: imagesList[0].id,
+    score: 0,
+  }
+
+  OnFruitsClick = () => {
+    this.setState({category: 'FRUIT'})
+  }
+
+  onThumbnailClick = id => {
+    const {activeImageId} = this.state
+    if (id === activeImageId) {
+      const imageIndex = Math.ceil(Math.random() * imagesList.length - 1)
+      this.setState(prevState => ({
+        ImageUrl: imagesList[imageIndex].imageUrl,
+        activeImageId: imagesList[imageIndex].id,
+        score: prevState.score + 1,
+      }))
+    }
+  }
+
+  OnAnimalsClick = () => {
+    this.setState({category: 'ANIMAL'})
+  }
+
+  OnPlacesClick = () => {
+    this.setState({category: 'PLACE'})
+  }
 
   render() {
-    const {ImageUrl} = this.state
+    const {ImageUrl, score, category} = this.state
+    let fruitCss
+    let animalCss
+    let placeCss
+
+    switch (category) {
+      case 'FRUIT':
+        fruitCss = 'underline'
+        break
+      case 'ANIMAL':
+        animalCss = 'underline'
+        break
+      case 'PLACE':
+        placeCss = 'underline'
+        break
+
+      default:
+        fruitCss = ''
+        animalCss = ''
+        placeCss = ''
+        break
+    }
+    const fruitImages = imagesList.filter(item => item.category === category)
     return (
       <div className="totalBG">
         <div className="contentBG">
-          <NavBar />
+          <NavBar scoreUpdate={score} secValue="1" />
           <img alt="match" src={ImageUrl} className="matchImage" />
           <div className="CategoriesContainer">
-            <p className="categoryCss">Fruits</p>
-            <p className="categoryCss">Animals</p>
-            <p className="categoryCss">Places</p>
+            <button
+              type="button"
+              className={`categoryCss ${fruitCss}`}
+              onClick={this.OnFruitsClick}
+            >
+              Fruits
+            </button>
+            <button
+              type="button"
+              className={`categoryCss ${animalCss}`}
+              onClick={this.OnAnimalsClick}
+            >
+              Animals
+            </button>
+            <button
+              type="button"
+              className={`categoryCss ${placeCss}`}
+              onClick={this.OnPlacesClick}
+            >
+              Places
+            </button>
+          </div>
+          <div className="ThumbnailsContainer">
+            {fruitImages.map(item => (
+              <Pictures
+                key={item.id}
+                thumbnailDetails={item}
+                onThumbnailClick={this.onThumbnailClick}
+              />
+            ))}
           </div>
         </div>
       </div>

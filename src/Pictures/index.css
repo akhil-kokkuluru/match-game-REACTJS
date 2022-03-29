@@ -1,0 +1,16 @@
+.thumbnailImage {
+  width: 60px;
+  height: 60px;
+}
+.ThumbnailButton {
+  width: 60px;
+  height: 60px;
+  margin-right: 8px;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0px;
+  cursor: pointer;
+  background-color: transparent;
+}
