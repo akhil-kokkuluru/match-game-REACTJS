@@ -254,10 +254,47 @@ class HomePage extends Component {
     category: 'FRUIT',
     activeImageId: imagesList[0].id,
     score: 0,
+    renderEl: true,
+    timer: 60,
   }
 
   OnFruitsClick = () => {
-    this.setState({category: 'FRUIT'})
+    this.setState({
+      ImageUrl: imagesList[0].imageUrl,
+      category: 'FRUIT',
+      activeImageId: imagesList[0].id,
+      score: 0,
+      renderEl: true,
+    })
+  }
+
+  onTimerInstance = () => {
+    const {timer} = this.state
+    if (timer > 0) {
+      this.setState(prev => ({timer: prev.timer - 1}))
+    } else {
+      clearInterval(this.intervalId)
+      this.setState({
+        score: 0,
+        renderEl: false,
+      })
+    }
+  }
+
+  timerStart = () => {
+    const {timer} = this.state
+    this.intervalId = setInterval(this.onTimerInstance, 1000)
+    return {timer}
+  }
+
+  onPlayAgain = () => {
+    this.setState({
+      ImageUrl: imagesList[0].imageUrl,
+      category: 'FRUIT',
+      activeImageId: imagesList[0].id,
+      score: 0,
+      renderEl: true,
+    })
   }
 
   onThumbnailClick = id => {
@@ -268,7 +305,10 @@ class HomePage extends Component {
         ImageUrl: imagesList[imageIndex].imageUrl,
         activeImageId: imagesList[imageIndex].id,
         score: prevState.score + 1,
+        renderEl: true,
       }))
+    } else {
+      this.setState({renderEl: false})
     }
   }
 
@@ -280,8 +320,19 @@ class HomePage extends Component {
     this.setState({category: 'PLACE'})
   }
 
+  endgame = () => {
+    this.setState({renderEl: false})
+  }
+
   render() {
-    const {ImageUrl, score, category} = this.state
+    const {
+      ImageUrl,
+      score,
+      category,
+      renderEl,
+      timer,
+      activeImageId,
+    } = this.state
     let fruitCss
     let animalCss
     let placeCss
@@ -308,30 +359,36 @@ class HomePage extends Component {
     const gameBody = (
       <div className="bgtotal">
         <img alt="match" src={ImageUrl} className="matchImage" />
-        <div className="CategoriesContainer">
-          <button
-            type="button"
-            className={`categoryCss ${fruitCss}`}
-            onClick={this.OnFruitsClick}
-          >
-            Fruits
-          </button>
-          <button
-            type="button"
-            className={`categoryCss ${animalCss}`}
-            onClick={this.OnAnimalsClick}
-          >
-            Animals
-          </button>
-          <button
-            type="button"
-            className={`categoryCss ${placeCss}`}
-            onClick={this.OnPlacesClick}
-          >
-            Places
-          </button>
-        </div>
-        <div className="ThumbnailsContainer">
+        <ul className="CategoriesContainer">
+          <li>
+            <button
+              type="button"
+              className={`categoryCss ${fruitCss}`}
+              onClick={this.OnFruitsClick}
+            >
+              Fruits
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              className={`categoryCss ${animalCss}`}
+              onClick={this.OnAnimalsClick}
+            >
+              Animals
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              className={`categoryCss ${placeCss}`}
+              onClick={this.OnPlacesClick}
+            >
+              Places
+            </button>
+          </li>
+        </ul>
+        <ul className="ThumbnailsContainer">
           {fruitImages.map(item => (
             <Pictures
               key={item.id}
@@ -339,26 +396,35 @@ class HomePage extends Component {
               onThumbnailClick={this.onThumbnailClick}
             />
           ))}
-        </div>
+        </ul>
       </div>
     )
+
+    const scoreCard = (
+      <div className="trophy">
+        <img
+          className="cardImg"
+          alt="trophy"
+          src="https://assets.ccbp.in/frontend/react-js/match-game-trophy.png"
+        />
+        <p className="scoreText">YOUR SCORE</p>
+        <p className="scoring">{score}</p>
+        <button className="buttoncss" type="button" onClick={this.onPlayAgain}>
+          <img
+            alt="reset"
+            src="https://assets.ccbp.in/frontend/react-js/match-game-play-again-img.png"
+          />
+          PLAY AGAIN
+        </button>
+      </div>
+    )
+
+    const rendering = renderEl ? gameBody : scoreCard
     return (
       <div className="totalBG">
         <div className="contentBG">
-          <NavBar scoreUpdate={score} secValue="1" />
-          <div className="trophy">
-            <img
-              className="cardImg"
-              alt="trophy"
-              src="https://assets.ccbp.in/frontend/react-js/match-game-trophy.png"
-            />
-            <h1 className="scoreText">YOUR SCORE</h1>
-            <h1 className="scoring">{score}</h1>
-            <button className="buttoncss" type="button">
-              <img src="https://assets.ccbp.in/frontend/react-js/match-game-play-again-img.png" />
-              PLAY AGAIN
-            </button>
-          </div>
+          <NavBar key={activeImageId} scoreUpdate={score} secValue={timer} />
+          {rendering}
         </div>
       </div>
     )

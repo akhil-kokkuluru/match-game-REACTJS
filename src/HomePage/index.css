@@ -103,3 +103,20 @@
   justify-content: space-between;
   align-items: center;
 }
+ul,
+li {
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+}
+@media screen and (min-width: 768px) {
+  .matchImage {
+    width: 54%;
+  }
+  .categoryCss {
+    font-size: 27px;
+  }
+  .totalBG {
+    height: 200vh;
+  }
+}

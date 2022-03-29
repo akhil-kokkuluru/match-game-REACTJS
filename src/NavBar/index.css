@@ -40,3 +40,33 @@
 .timerimgCss {
   width: 20px;
 }
+ul,
+li {
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+}
+@media screen and (min-width: 768px) {
+  .timerScoreContainer {
+    width: 30%;
+  }
+
+  .navBG {
+    height: 140px;
+  }
+  .logoCss {
+    width: 270px;
+  }
+  .score {
+    font-size: 44px;
+  }
+  .scoreSpan {
+    font-size: 44px;
+  }
+  .timerText {
+    font-size: 44px;
+  }
+  .timerimgCss {
+    width: 46px;
+  }
+}
