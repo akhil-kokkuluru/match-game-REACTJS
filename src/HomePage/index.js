@@ -304,42 +304,60 @@ class HomePage extends Component {
         break
     }
     const fruitImages = imagesList.filter(item => item.category === category)
+
+    const gameBody = (
+      <div className="bgtotal">
+        <img alt="match" src={ImageUrl} className="matchImage" />
+        <div className="CategoriesContainer">
+          <button
+            type="button"
+            className={`categoryCss ${fruitCss}`}
+            onClick={this.OnFruitsClick}
+          >
+            Fruits
+          </button>
+          <button
+            type="button"
+            className={`categoryCss ${animalCss}`}
+            onClick={this.OnAnimalsClick}
+          >
+            Animals
+          </button>
+          <button
+            type="button"
+            className={`categoryCss ${placeCss}`}
+            onClick={this.OnPlacesClick}
+          >
+            Places
+          </button>
+        </div>
+        <div className="ThumbnailsContainer">
+          {fruitImages.map(item => (
+            <Pictures
+              key={item.id}
+              thumbnailDetails={item}
+              onThumbnailClick={this.onThumbnailClick}
+            />
+          ))}
+        </div>
+      </div>
+    )
     return (
       <div className="totalBG">
         <div className="contentBG">
           <NavBar scoreUpdate={score} secValue="1" />
-          <img alt="match" src={ImageUrl} className="matchImage" />
-          <div className="CategoriesContainer">
-            <button
-              type="button"
-              className={`categoryCss ${fruitCss}`}
-              onClick={this.OnFruitsClick}
-            >
-              Fruits
+          <div className="trophy">
+            <img
+              className="cardImg"
+              alt="trophy"
+              src="https://assets.ccbp.in/frontend/react-js/match-game-trophy.png"
+            />
+            <h1 className="scoreText">YOUR SCORE</h1>
+            <h1 className="scoring">{score}</h1>
+            <button className="buttoncss" type="button">
+              <img src="https://assets.ccbp.in/frontend/react-js/match-game-play-again-img.png" />
+              PLAY AGAIN
             </button>
-            <button
-              type="button"
-              className={`categoryCss ${animalCss}`}
-              onClick={this.OnAnimalsClick}
-            >
-              Animals
-            </button>
-            <button
-              type="button"
-              className={`categoryCss ${placeCss}`}
-              onClick={this.OnPlacesClick}
-            >
-              Places
-            </button>
-          </div>
-          <div className="ThumbnailsContainer">
-            {fruitImages.map(item => (
-              <Pictures
-                key={item.id}
-                thumbnailDetails={item}
-                onThumbnailClick={this.onThumbnailClick}
-              />
-            ))}
           </div>
         </div>
       </div>
