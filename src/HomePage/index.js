@@ -2,12 +2,13 @@ import './index.css'
 import {Component} from 'react'
 import NavBar from '../NavBar'
 import Pictures from '../Pictures'
+import TablsList from '../TabsList'
 
-// const tabsList = [
-//   {tabId: 'FRUIT', displayText: 'Fruits'},
-//   {tabId: 'ANIMAL', displayText: 'Animals'},
-//   {tabId: 'PLACE', displayText: 'Places'},
-// ]
+const tabsList = [
+  {tabId: 'FRUIT', displayText: 'Fruits'},
+  {tabId: 'ANIMAL', displayText: 'Animals'},
+  {tabId: 'PLACE', displayText: 'Places'},
+]
 const imagesList = [
   {
     id: 'b11ec8ce-35c9-4d67-a7f7-07516d0d8186',
@@ -266,10 +267,6 @@ class HomePage extends Component {
     clearInterval(this.intervalId)
   }
 
-  OnFruitsClick = () => {
-    this.setState(this.setState({category: 'FRUIT'}))
-  }
-
   onTimerInstance = () => {
     const {timer} = this.state
     if (timer > 0) {
@@ -309,12 +306,8 @@ class HomePage extends Component {
     }
   }
 
-  OnAnimalsClick = () => {
-    this.setState({category: 'ANIMAL'})
-  }
-
-  OnPlacesClick = () => {
-    this.setState({category: 'PLACE'})
+  OnCategoryClick = ids => {
+    this.setState({category: ids})
   }
 
   endgame = () => {
@@ -330,62 +323,23 @@ class HomePage extends Component {
       timer,
       activeImageId,
     } = this.state
-    let fruitCss
-    let animalCss
-    let placeCss
 
-    switch (category) {
-      case 'FRUIT':
-        fruitCss = 'underline'
-        break
-      case 'ANIMAL':
-        animalCss = 'underline'
-        break
-      case 'PLACE':
-        placeCss = 'underline'
-        break
-
-      default:
-        fruitCss = ''
-        animalCss = ''
-        placeCss = ''
-        break
-    }
     const fruitImages = imagesList.filter(item => item.category === category)
 
     const gameBody = (
       <ul className="bgtotal">
         <img alt="match" src={ImageUrl} className="matchImage" />
-        <li className="CategoriesContainer">
-          <li>
-            <button
-              type="button"
-              className={`categoryCss ${fruitCss}`}
-              onClick={this.OnFruitsClick}
-            >
-              Fruits
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              className={`categoryCss ${animalCss}`}
-              onClick={this.OnAnimalsClick}
-            >
-              Animals
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              className={`categoryCss ${placeCss}`}
-              onClick={this.OnPlacesClick}
-            >
-              Places
-            </button>
-          </li>
-        </li>
-        <li className="ThumbnailsContainer">
+        <ul className="CategoriesContainer">
+          {tabsList.map(item => (
+            <TablsList
+              key={item.tabId}
+              CategoryItem={item}
+              OnCategoryClick={this.OnCategoryClick}
+              isActive={item.tabId === category}
+            />
+          ))}
+        </ul>
+        <ul className="ThumbnailsContainer">
           {fruitImages.map(item => (
             <Pictures
               key={item.id}
@@ -393,7 +347,7 @@ class HomePage extends Component {
               onThumbnailClick={this.onThumbnailClick}
             />
           ))}
-        </li>
+        </ul>
       </ul>
     )
 

@@ -1,0 +1,20 @@
+.categoryCss {
+  font-size: 17px;
+  font-weight: bold;
+
+  border: 0px;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+  color: #ffffff;
+}
+.underline {
+  border-bottom: 4px solid #fec653;
+  color: #fec653;
+}
+
+ul,
+li {
+  padding: 0px;
+  margin: 0px;
+}
