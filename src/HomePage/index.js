@@ -258,33 +258,29 @@ class HomePage extends Component {
     timer: 60,
   }
 
+  componentDidMount() {
+    this.intervalId = setInterval(this.onTimerInstance, 1000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId)
+  }
+
   OnFruitsClick = () => {
-    this.setState({
-      ImageUrl: imagesList[0].imageUrl,
-      category: 'FRUIT',
-      activeImageId: imagesList[0].id,
-      score: 0,
-      renderEl: true,
-    })
+    this.setState(this.setState({category: 'FRUIT'}))
   }
 
   onTimerInstance = () => {
     const {timer} = this.state
     if (timer > 0) {
       this.setState(prev => ({timer: prev.timer - 1}))
-    } else {
+    } else if (timer === 0) {
       clearInterval(this.intervalId)
-      this.setState({
-        score: 0,
+      this.setState(prev => ({
         renderEl: false,
-      })
+        score: prev.score,
+      }))
     }
-  }
-
-  timerStart = () => {
-    const {timer} = this.state
-    this.intervalId = setInterval(this.onTimerInstance, 1000)
-    return {timer}
   }
 
   onPlayAgain = () => {
@@ -293,6 +289,7 @@ class HomePage extends Component {
       category: 'FRUIT',
       activeImageId: imagesList[0].id,
       score: 0,
+      timer: 60,
       renderEl: true,
     })
   }
@@ -357,9 +354,9 @@ class HomePage extends Component {
     const fruitImages = imagesList.filter(item => item.category === category)
 
     const gameBody = (
-      <div className="bgtotal">
+      <ul className="bgtotal">
         <img alt="match" src={ImageUrl} className="matchImage" />
-        <ul className="CategoriesContainer">
+        <li className="CategoriesContainer">
           <li>
             <button
               type="button"
@@ -387,8 +384,8 @@ class HomePage extends Component {
               Places
             </button>
           </li>
-        </ul>
-        <ul className="ThumbnailsContainer">
+        </li>
+        <li className="ThumbnailsContainer">
           {fruitImages.map(item => (
             <Pictures
               key={item.id}
@@ -396,8 +393,8 @@ class HomePage extends Component {
               onThumbnailClick={this.onThumbnailClick}
             />
           ))}
-        </ul>
-      </div>
+        </li>
+      </ul>
     )
 
     const scoreCard = (
