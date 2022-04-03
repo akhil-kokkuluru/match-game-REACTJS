@@ -9,19 +9,19 @@ const NavBar = props => {
         alt="website logo"
         src="https://assets.ccbp.in/frontend/react-js/match-game-website-logo.png"
       />
-      <div className="timerScoreContainer">
+      <li className="timerScoreContainer">
         <p className="score">
           Score: <span className="scoreSpan">{scoreUpdate}</span>
         </p>
-        <div className="timerContainer">
+        <li className="timerContainer">
           <img
             alt="timer"
             src="https://assets.ccbp.in/frontend/react-js/match-game-timer-img.png"
             className="timerimgCss"
           />
           <p className="timerText">{`${secValue} secs`}</p>
-        </div>
-      </div>
+        </li>
+      </li>
     </ul>
   )
 }

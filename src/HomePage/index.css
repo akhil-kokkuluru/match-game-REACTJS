@@ -119,4 +119,27 @@ li {
   .totalBG {
     height: 200vh;
   }
+  .trophy {
+    background-size: cover;
+    width: 60%;
+    justify-content: flex-end;
+  }
+  .scoreText {
+    font-size: 60px;
+  }
+  .scoring {
+    font-size: 60px;
+  }
+  .buttoncss {
+    width: 250px;
+    height: 100px;
+    font-size: 30px;
+  }
+  .replay {
+    width: 56px;
+    height: 56px;
+  }
+  .cardImg {
+    width: 60%;
+  }
 }

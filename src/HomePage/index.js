@@ -260,10 +260,18 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    this.intervalId = setInterval(this.onTimerInstance, 1000)
+    this.timerTrigger()
   }
 
   componentWillUnmount() {
+    this.clearingInterval()
+  }
+
+  timerTrigger = () => {
+    this.intervalId = setInterval(this.onTimerInstance, 1000)
+  }
+
+  clearingInterval = () => {
     clearInterval(this.intervalId)
   }
 
@@ -289,6 +297,7 @@ class HomePage extends Component {
       timer: 60,
       renderEl: true,
     })
+    this.timerTrigger()
   }
 
   onThumbnailClick = id => {
@@ -302,7 +311,8 @@ class HomePage extends Component {
         renderEl: true,
       }))
     } else {
-      this.setState({renderEl: false})
+      this.setState(preval => ({renderEl: false, timer: preval.timer}))
+      this.clearingInterval()
     }
   }
 
@@ -311,6 +321,7 @@ class HomePage extends Component {
   }
 
   endgame = () => {
+    this.clearingInterval()
     this.setState({renderEl: false})
   }
 
@@ -363,6 +374,7 @@ class HomePage extends Component {
         <button className="buttoncss" type="button" onClick={this.onPlayAgain}>
           <img
             alt="reset"
+            className="replay"
             src="https://assets.ccbp.in/frontend/react-js/match-game-play-again-img.png"
           />
           PLAY AGAIN
